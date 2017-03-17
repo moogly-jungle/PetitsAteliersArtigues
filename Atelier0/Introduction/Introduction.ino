@@ -25,17 +25,20 @@ Servo moteur;
 int angle;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600); /* pas vraiment d'explication sur ça, c'est trop compliqué pour les petits */
   moteur.attach(PIN_MOTEUR);
 
   /* option : pour montrer le concept de mouvement,
    * on fait varier le délai pour faire varier la vitesse */
-  for (angle=0; angle<180; angle = angle+1) { /* angle = angle+1 plutot que angle++ pour simplifier la syntaxe */
+  angle=0;
+  while (angle<180) { /* while est plus comprehensible pour le début */
     moteur.write(angle); /* on évite les float, pour les élèves de primaire, c'est un peu complexe */
+    angle = angle+1; /* angle = angle+1 plutot que angle++ pour simplifier la syntaxe */
     delay(20);
   }
-  for (angle=180; angle>0; angle = angle-1) {
-    moteur.write(angle);
+  while (angle>0) { /* while est plus comprehensible pour le début */
+    moteur.write(angle); /* on évite les float, pour les élèves de primaire, c'est un peu complexe */
+    angle = angle-1; /* angle = angle+1 plutot que angle++ pour simplifier la syntaxe */
     delay(20);
   }
 }
