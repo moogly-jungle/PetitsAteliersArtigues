@@ -5,11 +5,12 @@
  * --------------
  * Introduction rapide à l'Arduino Uno
  * 1) Commencer par brancher le moteur et envoyer des valeurs constantes
+ *    - le cablage du moteur : maron ou noir : GND / rouge : Vcc batterie / orange ou jaune : signal (sur le pin 4)
  *    - le moteur, c'est motivant, ça sort un peu de l'ordinaire, et c'est lié à la robotique
  *    - il faut introduire le concept d'angle pour les petits
  * 1' option) faire une boucle avec un délai pour faire bouger le servo "tout seul"
  *    - c'est l'occasion de parler de variable, et de boucle (ne pas oublier le délai)
- * 1'' option) monitorer le signal à l'oscilloscope
+ * 1'' option) monitorer le signal à l'oscilloscope (démonstration)
  * 2) Brancher le potentiomètre, faire un retour dans le terminal pour voir concretement bouger la valeur
  * 3) Piloter le servo avec le potentiomètre, on introduit map
  * 4) Brancher et tester le buzzer avec le bouton poussoir (ce sera infernal sinon...)
@@ -30,6 +31,8 @@ void setup() {
 
   /* option : pour montrer le concept de mouvement,
    * on fait varier le délai pour faire varier la vitesse */
+  Serial.println();
+  Serial.print("Mise en marche du moteur ... ");
   angle=0;
   while (angle<180) { /* while est plus comprehensible pour le début */
     moteur.write(angle); /* on évite les float, pour les élèves de primaire, c'est un peu complexe */
@@ -41,6 +44,7 @@ void setup() {
     angle = angle-1; /* angle = angle+1 plutot que angle++ pour simplifier la syntaxe */
     delay(20);
   }
+  Serial.println("ok !");
 }
 
 void loop() {
@@ -57,7 +61,7 @@ void loop() {
    * sinon, le servo perturbe la tension de référence du potentiomètre */
   angle = map(commande, 0, 1023, 0, 180); /* transforme la commande de [0,1023] -> [0,180] */
   // moteur.write(angle); 
-  Serial.print("angle = "); Serial.print(angle); Serial.print("\n");
+  Serial.print("angle = "); Serial.println(angle); 
 
   /* pilotage de la led */
   int blue = map(commande, 0, 1023, 0, 255); /* transforme la commande de [0,1023] -> [0,255] */
